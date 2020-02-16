@@ -13,7 +13,8 @@ node{
   stage('sonar qube scanner'){
     withSonarQubeEnv('sonarqube') {
     // some block
+    def mvnhome = tool name: 'mavenhome', type: 'maven'
+    sh "${mvnhome}/bin/mvn sonar:sonar"
   }
-    sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.0.1398:sonar/'
   }
 }
