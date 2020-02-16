@@ -14,6 +14,6 @@ node{
     withSonarQubeEnv('sonarqube') {
     // some block
   }
-    sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.0.1398:http://51.145.128.131/'
+    sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.0.1398:sonar/'
   }
 }
