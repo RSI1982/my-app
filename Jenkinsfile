@@ -11,7 +11,7 @@ node{
     Please find the latest status of jenkins jobs''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job Status', to: 'err.rakeshsingh@gmail.com'
   }
   stage('sonar qube scanner'){
-    withSonarQubeEnv(credentialsId: 'Secret text') {
+    withSonarQubeEnv(credentialsId: 'sonarqube') {
     // some block
   }
     def mvnhome = tool name: 'mavenhome', type: 'maven'
