@@ -7,6 +7,7 @@ node{
     sh "${mvnhome}/bin/mvn package"
         }
   stage('mail notification'){
-    mail bcc: '', body: '', cc: '', from: '', replyTo: '', subject: 'JenkinsJob-Build Status', to: 'err.rakeshsingh@gmail.com'
+    mail bcc: '', body: '''Hi Team,
+    Please find the latest status of jenkins jobs''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job Status', to: 'err.rakeshsingh@gmail.com'
   }
 }
