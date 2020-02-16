@@ -4,6 +4,6 @@ node{
   }
   stage('build and test'){
     def tool name: 'mavenhome', type: 'maven'
-     sh "$(mavenhome)/bin/mvn package"
+    sh "${mavenhome}/bin/mvn package"
         }
 }
