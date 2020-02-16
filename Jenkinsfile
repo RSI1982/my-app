@@ -11,7 +11,7 @@ node{
     Please find the latest status of jenkins jobs''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job Status', to: 'err.rakeshsingh@gmail.com'
   }
   stage('sonar qube scanner'){
-    withSonarQubeEnv('ee167511-bda4-451d-90a0-44dc645cb301') {
+    withSonarQubeEnv('sonarqube') {
     // some block
   }
     sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.0.1398:sonar/'
