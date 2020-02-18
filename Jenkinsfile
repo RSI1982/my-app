@@ -11,10 +11,8 @@ node{
     Please find the latest status of jenkins jobs''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job Status', to: 'err.rakeshsingh@gmail.com'
   }
   stage('sonar qube scanner'){
-    withSonarQubeEnv('sonarqubescanner') {
-    // some block
-    def mvnhome = tool name: 'mavenhome', type: 'maven'
-    sh "${mvnhome}/bin/mvn sonar:sonar"
+      withEnv(['MYTOOL_HOME=/usr/local/src/apache-maven/']) {
+    sh '$MYTOOL_HOME/bin/mvn sonar:sonar'
   }
   }
 }
