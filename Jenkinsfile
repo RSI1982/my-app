@@ -12,9 +12,6 @@ node{
   }
   stage('sonar qube analysis'){
     def mvnhome = tool name: 'mavenhome', type: 'maven'
-    withSonarQubeEnv('sonarqubescanner') {
-    // some block
     sh "${mvnhome}/bin/mvn sonar:sonar"
-  }
   }
 }
