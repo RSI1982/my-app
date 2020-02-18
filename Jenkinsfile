@@ -10,8 +10,9 @@ node{
     mail bcc: '', body: '''Hi Team,
     Please find the latest status of jenkins jobs''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job Status', to: 'err.rakeshsingh@gmail.com'
   }
-  stage('sonar qube analysis'){
-    def mvnhome = tool name: 'mavenhome', type: 'maven'
-    sh "${mvnhome}/bin/mvn sonar:sonar"
-  }
+   stage('SonarQube Analysis') {
+        def mvnHome =  tool name: 'maven-3', type: 'maven'
+        withSonarQubeEnv('sonarqube') { 
+          sh "${mvnHome}/bin/mvn sonar:sonar"
+        }
 }
