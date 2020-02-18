@@ -11,8 +11,7 @@ node{
     Please find the latest status of jenkins jobs''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job Status', to: 'err.rakeshsingh@gmail.com'
   }
    stage('SonarQube Analysis') {
-        def sonarqubescanner = tool name: 'sonarqubescanner', type: 'maven'
-        withSonarQubeEnv('sonarqube') { 
+          tool name: 'sonarqubescanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
           sh "${sonarqubescanner}/bin/mvn sonar:sonar"
         }
   }
