@@ -13,6 +13,5 @@ node{
    stage('SonarQube Analysis') {
           tool name: 'sonarqubescanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
           sh "${sonarqubescanner}/bin/mvn sonar:sonar"
-        }
   }
 }
