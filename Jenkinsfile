@@ -15,4 +15,5 @@ node{
         withSonarQubeEnv('sonarqube') { 
           sh "${mvnHome}/bin/mvn sonar:sonar"
         }
+  }
 }
