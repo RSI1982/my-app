@@ -8,6 +8,6 @@ node{
   }
   stage('mail notification'){
     mail bcc: '', body: '''Hi Team,
-    This is the build status of your project build''', cc: '', from: '', replyTo: '', subject: 'Buildstatus', to: 'err.rakeshsingh@gmail.com'
+    Please find the latest status of jenkins jobs''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job Status', to: 'err.rakeshsingh@gmail.com'
   }
 }
