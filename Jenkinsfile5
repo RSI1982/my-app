@@ -16,4 +16,15 @@ node{
     // some block
     sh "${mvnhome}/bin/mvn sonar:sonar"
   }
+  stage('quality gate'){
+        "conditions": [
+            {
+                "errorThreshold": "1",
+                "metric": "new_security_rating",
+                "onLeakPeriod": true,
+                "operator": "GREATER_THAN",
+                "status": "OK",
+                "value": "1"
+                 }
+        ]               
 }
