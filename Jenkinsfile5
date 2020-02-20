@@ -16,4 +16,5 @@ node{
     // some block
     sh "${mvnhome}/bin/mvn sonar:sonar"
   }
+}
 
