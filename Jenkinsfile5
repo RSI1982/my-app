@@ -11,9 +11,8 @@ node{
     withSonarQubeEnv(credentialsId: 'sonarqube-token') {
     // some block
     sh "${mvnhome}/bin/mvn sonar:sonar"
-}
+  }
   stage('sonarqub qualitygate'){
      no public field ‘webhookSecretId’ (or getter method) found in class org.sonarsource.scanner.jenkins.pipeline.WaitForQualityGateStep
-  }
-   
+  }   
 }
