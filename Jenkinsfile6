@@ -6,29 +6,9 @@ node{
     def mvnhome = tool name: 'mavenhome', type: 'maven'
     sh "${mvnhome}/bin/mvn package"
   }
-  stage('mail notification'){
-     mail bcc: '', body: '''Hi Team,
-     Please find the latest status of jenkins jobs''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job Status', to: 'err.rakeshsingh@gmail.com'
-  }
-  stage('sonarqube analysis')
-    def mvnhome = tool name: 'mavenhome', type: 'maven'
-    withSonarQubeEnv(credentialsId: 'sonarqube-token') {
-    // some block
-    sh "${mvnhome}/bin/mvn sonar:sonar"
-  }
-  stage("Quality Gate"){
-    timeout(time: 1, unit: 'HOURS') { // Just in case something goes wrong, pipeline will be killed after a timeout
-    def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
-    if (qg.status != 'OK') {
-      error "Pipeline aborted due to quality gate failure: ${qg.status}"
-    } 
-  }
-}
  stage('artifactory configuration'){
-   def server = Artifactory.server "nexus125"
-       def rtMaven = Artifactory.newMavenBuild()
-       def buildInfo
-       def mvnhome = tool name: 'mavenhome', type: 'maven'
-       sh "${mvnhome}/bin/mvn server:server"
+        def mvnhome = tool name: 'mavenhome', type: 'maven'
+        rtMaven.deployer releaseRepo:'libs-release-local', snapshotRepo:'libs-snapshot-local', server: server
+        rtMaven.resolver releaseRepo:'libs-release', snapshotRepo:'libs-snapshot', server: serve
      }
 }
