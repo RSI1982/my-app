@@ -6,7 +6,7 @@ node{
     def mvnhome = tool name: 'mavenhome', type: 'maven'
     sh "${mvnhome}/bin/mvn package"
   }
-  stage ('creating build tag'){
-    createTag nexusInstanceId: 'nexus125', tagAttributesJson: '{"createdBy": "rakeshsingh"}', tagName: 'build-125'
+    stage ('Creating build tag') {
+        createTag nexusInstanceId: 'nexus125', tagAttributesJson: '{"createdBy" : "rakeshsingh"}', tagName: 'build-125'
   }
 }
