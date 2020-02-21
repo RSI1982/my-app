@@ -21,7 +21,14 @@ node{
     def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
     if (qg.status != 'OK') {
       error "Pipeline aborted due to quality gate failure: ${qg.status}"
-    }
+    } 
   }
 }
+ stage('artifactory configuration'){
+   def server = Artifactory.server "nexus125"
+       def rtMaven = Artifactory.newMavenBuild()
+       def buildInfo
+       def mvnhome = tool name: 'mavenhome', type: 'maven'
+       sh "${mvnhome}/bin/mvn server:server"
+     }
 }
