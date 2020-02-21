@@ -6,7 +6,4 @@ node{
     def mvnhome = tool name: 'mavenhome', type: 'maven'
     sh "${mvnhome}/bin/mvn package"
   }
-   stage ('Creating build tag') {
-     curl -u admin:admin123 --upload-file myapp.tgz "http://13.80.183.40:8081/repository/repository-example/nexus125/nexus125/myapp/1.1/var/lib/jenkins/workspace/pipeline_artifacts/target/myweb-0.0.7-SNAPSHOT.war"
-  }
 }
