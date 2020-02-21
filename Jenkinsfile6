@@ -10,4 +10,18 @@ node{
      mail bcc: '', body: '''Hi Team,
      Please find the latest status of jenkins jobs''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job Status', to: 'err.rakeshsingh@gmail.com'
   }
+  stage('sonarqube analysis')
+    def mvnhome = tool name: 'mavenhome', type: 'maven'
+    withSonarQubeEnv(credentialsId: 'sonarqube-token') {
+    // some block
+    sh "${mvnhome}/bin/mvn sonar:sonar"
+  }
+  stage("Quality Gate"){
+    timeout(time: 1, unit: 'HOURS') { // Just in case something goes wrong, pipeline will be killed after a timeout
+    def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
+    if (qg.status != 'OK') {
+      error "Pipeline aborted due to quality gate failure: ${qg.status}"
+    }
+  }
+}
 }
