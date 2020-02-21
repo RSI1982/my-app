@@ -6,9 +6,7 @@ node{
     def mvnhome = tool name: 'mavenhome', type: 'maven'
     sh "${mvnhome}/bin/mvn package"
   }
- stage('artifactory configuration'){
-        def mvnhome = tool name: 'mavenhome', type: 'maven'
-        rtMaven.deployer releaseRepo:'libs-release-local', snapshotRepo:'libs-snapshot-local', server: server
-        rtMaven.resolver releaseRepo:'libs-release', snapshotRepo:'libs-snapshot', server: serve
-     }
+  stage ('creating build tag'){
+    createTag nexusInstanceId: 'nexus125', tagAttributesJson: '{"createdBy": "rakeshsingh"}', tagName: 'build-125'
+  }
 }
