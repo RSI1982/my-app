@@ -6,7 +6,10 @@ node{
     def mvnhome = tool name: 'mavenhome', type: 'maven'
     sh "${mvnhome}/bin/mvn package"
   }
-    stage ('Creating build tag') {
+   stage ('Creating build tag') {
         createTag nexusInstanceId: 'nexus125', tagAttributesJson: '{"createdBy" : "rakeshsingh"}', tagName: 'build-125'
   }
+  stage ('Publishing') {
+        nexusPublisher nexusInstanceId: 'nexus125', nexusRepositoryId: 'maven-releases', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: '/var/lib/jenkins/workspace/pipeline_artifacts/target/myweb-0.0.7-SNAPSHOT.war']], mavenCoordinate: [artifactId: 'fancyWidget', groupId: 'com.mycompany', packaging: 'jar', version: '1.1']]], tagName: 'build-125'
+    }
 }
