@@ -1,0 +1,30 @@
+node{
+  stage('git checkout'){
+    git credentialsId: 'GITCredential', url: 'https://github.com/RSI1982/my-app.git'
+  }
+  stage('build and test'){
+    def mvnhome = tool name: 'mavenhome', type: 'maven'
+    sh "${mvnhome}/bin/mvn package"
+  }
+   stage('Publish') {
+     nexusPublisher nexusInstanceId: 'nexus125', nexusRepositoryId: 'repository-example', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: '/var/lib/jenkins/workspace/pipeline_artifacts/target/myweb-0.0.7-SNAPSHOT.war']], mavenCoordinate: [artifactId: 'apollo', groupId: 'bayer', packaging: 'war', version: '1.0']]]
+   }
+   stage('mail notification'){
+     mail bcc: '', body: '''Hi Team,
+     Please find the latest status of jenkins jobs''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job Status', to: 'err.rakeshsingh@gmail.com'
+  }
+  stage('sonarqube analysis')
+    def mvnhome = tool name: 'mavenhome', type: 'maven'
+    withSonarQubeEnv(credentialsId: 'sonarqube-token') {
+    // some block
+    sh "${mvnhome}/bin/mvn sonar:sonar"
+  }
+  stage("Quality Gate"){
+    timeout(time: 1, unit: 'HOURS') { // Just in case something goes wrong, pipeline will be killed after a timeout
+    def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
+    if (qg.status != 'OK') {
+      error "Pipeline aborted due to quality gate failure: ${qg.status}"
+    }
+  }
+}
+}
