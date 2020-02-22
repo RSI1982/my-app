@@ -6,4 +6,7 @@ node{
     def mvnhome = tool name: 'mavenhome', type: 'maven'
     sh "${mvnhome}/bin/mvn package"
   }
+   stage('Publish') {
+     nexusPublisher nexusInstanceId: 'nexus125', nexusRepositoryId: 'repository-example', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: '/var/lib/jenkins/workspace/pipeline_artifacts/target/myweb-0.0.7-SNAPSHOT.war']], mavenCoordinate: [artifactId: 'apollo', groupId: 'bayer', packaging: 'war', version: '1.0']]], tagName: 'build1.0'
+   }
 }
