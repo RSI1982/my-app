@@ -7,6 +7,8 @@ node{
     sh "${mvnhome}/bin/mvn package"
   }
   stage('Publish') {
-     nexusPublisher nexusInstanceId: 'nexus125', nexusRepositoryId: 'repository-example', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: '/var/lib/jenkins/workspace/pipeline_artifacts/target/myweb-0.0.7-SNAPSHOT.war']], mavenCoordinate: [artifactId: 'apollo', groupId: 'bayer', packaging: 'war', version: '${BUILD_NUMBER}']]]
+     sh label: '', script: '''cd ${WORKSPACE}/target/
+     curl -v -u admin:admin123 --upload-file myweb-0.0.7-SNAPSHOT.war http://104.45.26.1:8081/repository/repository-example/${BUILD_NUMBER}/
+'''
    }
 }
