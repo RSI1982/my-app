@@ -7,7 +7,7 @@ node{
     sh "${mvnhome}/bin/mvn package"
   }
   stage('Publish') {
-    sh label: '', script: '''cd {WORKSPACE}/target
+    sh label: '', script: '''cd {WORKSPACE}/*/target/
     curl -v -u admin:admin123 --upload-file myweb-0.0.7-SNAPSHOT.war http://104.45.26.1:8081/repository/repository-example/''' 
    }
 }
