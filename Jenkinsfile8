@@ -1,0 +1,12 @@
+node{
+  stage('git checkout'){
+    git credentialsId: 'GITCredential', url: 'https://github.com/RSI1982/my-app.git'
+  }
+  stage('build and test'){
+    def mvnhome = tool name: 'mavenhome', type: 'maven'
+    sh "${mvnhome}/bin/mvn package"
+  }
+  stage('Publish') {
+     nexusPublisher nexusInstanceId: 'nexus125', nexusRepositoryId: 'my-app', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: '', filePath: '/var/lib/jenkins/workspace/pipeline_artifacts/target/myweb-0.0.7-SNAPSHOT.war']], mavenCoordinate: [artifactId: 'apollo', groupId: 'bayer', packaging: 'war', version: '${BUILD_NUMBER}']]]
+   }
+}
