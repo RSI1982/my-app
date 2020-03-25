@@ -1,0 +1,24 @@
+node{
+    stage('SCM'){
+        git credentialsId: 'git_auth', url: 'https://github.com/RSI1982/my-app.git'
+    }
+    stage('maven buid'){
+        sh "mvn package"
+    }
+    stage('sonarqube scanner maven'){
+        sh label: '', script: 'mvn sonar:sonar -Dsonar.projectKey=javabasedmyapp -Dsonar.host.url=http://192.168.0.108:9000 -Dsonar.login=ce00f038c6f659d50dae6f3a53868a499d6dd94d'
+    }
+     stage('Verify Quality Gate'){
+        sleep(time:10,unit:"SECONDS")
+        sh label: '', script: '''response=$(curl http://192.168.0.108:9000/api/qualitygates/get_by_project?project=javabasedmyapp)
+r=$(jq -n "$response" | jq .qualityGate.default)
+if [ "$r" = "true" ]; 
+then
+   echo "Quality Gate Passed"
+else
+    echo "Quality Gate not Passed"
+    exit 1
+fi'''
+    }
+
+}
